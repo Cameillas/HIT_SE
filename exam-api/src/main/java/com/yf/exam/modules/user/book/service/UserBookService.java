@@ -11,8 +11,8 @@ import com.yf.exam.modules.user.book.entity.UserBook;
 * 错题本业务类
 * </p>
 *
-
-* @since 05-27 17:56
+* @author 聪明笨狗
+* @since 2020-05-27 17:56
 */
 public interface UserBookService extends IService<UserBook> {
 

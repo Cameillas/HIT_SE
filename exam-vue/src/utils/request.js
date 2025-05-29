@@ -171,12 +171,3 @@ export function post(url, data = {}) {
       })
   })
 }
-/**
- * 封装get请求
- * @param url
- * @param params
- * @returns {Promise}
- */
-export function get(url, params = {}) {
-  return instance.get(url, { params })
-}

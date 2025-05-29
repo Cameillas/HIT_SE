@@ -2,7 +2,6 @@ package com.yf.exam.ability.job.enums;
 
 /**
  * 任务分组
- * @author van
  */
 public interface JobGroup {
 

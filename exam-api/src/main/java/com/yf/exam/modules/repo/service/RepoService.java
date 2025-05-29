@@ -13,8 +13,8 @@ import com.yf.exam.modules.repo.entity.Repo;
 * 题库业务类
 * </p>
 *
-
-* @since 05-25 13:23
+* @author 聪明笨狗
+* @since 2020-05-25 13:23
 */
 public interface RepoService extends IService<Repo> {
 

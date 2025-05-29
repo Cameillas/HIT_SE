@@ -11,8 +11,8 @@ import java.io.Serializable;
 * 角色请求类
 * </p>
 *
-
-* @since 04-13 16:57
+* @author 聪明笨狗
+* @since 2020-04-13 16:57
 */
 @Data
 @ApiModel(value="角色", description="角色")

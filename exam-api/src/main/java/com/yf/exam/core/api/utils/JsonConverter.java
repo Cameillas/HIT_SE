@@ -12,8 +12,6 @@ import java.util.List;
 
 /**
  * JSON数据转换器，用于转换返回消息的格式
- * @author dav
- * @date 2018/9/11 19:30
  */
 public class JsonConverter {
 

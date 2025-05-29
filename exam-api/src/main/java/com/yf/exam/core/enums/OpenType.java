@@ -2,7 +2,6 @@ package com.yf.exam.core.enums;
 
 /**
  * 开放方式
- * @author bool
  */
 public interface OpenType {
 

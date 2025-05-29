@@ -27,8 +27,8 @@ import java.util.List;
 * 语言设置 服务实现类
 * </p>
 *
-
-* @since 05-25 13:23
+* @author 聪明笨狗
+* @since 2020-05-25 13:23
 */
 @Service
 public class QuRepoServiceImpl extends ServiceImpl<QuRepoMapper, QuRepo> implements QuRepoService {
@@ -36,6 +36,9 @@ public class QuRepoServiceImpl extends ServiceImpl<QuRepoMapper, QuRepo> impleme
 
     @Autowired
     private QuMapper quMapper;
+
+    @Autowired
+    private RepoService repoService;
 
     @Override
     public IPage<QuRepoDTO> paging(PagingReqDTO<QuRepoDTO> reqDTO) {
@@ -91,6 +94,32 @@ public class QuRepoServiceImpl extends ServiceImpl<QuRepoMapper, QuRepo> impleme
         if(!CollectionUtils.isEmpty(list)){
             for(QuRepo item: list){
                 ids.add(item.getRepoId());
+            }
+        }
+        return ids;
+    }
+
+    @Override
+    public List<String> listByRepo(String repoId, Integer quType, boolean rand) {
+        QueryWrapper<QuRepo> wrapper = new QueryWrapper<>();
+        wrapper.lambda()
+                .eq(QuRepo::getRepoId, repoId);
+
+        if(quType!=null){
+            wrapper.lambda().eq(QuRepo::getQuType, quType);
+        }
+
+        if(rand){
+            wrapper.orderByAsc(" RAND() ");
+        }else{
+            wrapper.lambda().orderByAsc(QuRepo::getSort);
+        }
+
+        List<QuRepo> list = this.list(wrapper);
+        List<String> ids = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(list)){
+            for(QuRepo item: list){
+                ids.add(item.getQuId());
             }
         }
         return ids;

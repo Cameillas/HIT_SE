@@ -26,13 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 /**
- * <p>
- * 考试控制器
- * </p>
- *
- * @since 07-25 16:18
- */
-@Api(tags = {"考试"})
+* <p>
+* 考试控制器
+* </p>
+*
+* @author 聪明笨狗
+* @since 2020-07-25 16:18
+*/
+@Api(tags={"考试"})
 @RestController
 @RequestMapping("/exam/api/exam/exam")
 public class ExamController extends BaseController {
@@ -41,14 +42,13 @@ public class ExamController extends BaseController {
     private ExamService baseService;
 
     /**
-     * 添加或修改
-     *
-     * @param reqDTO
-     * @return
-     */
+    * 添加或修改
+    * @param reqDTO
+    * @return
+    */
     @RequiresRoles("sa")
     @ApiOperation(value = "添加或修改")
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @RequestMapping(value = "/save", method = { RequestMethod.POST})
     public ApiRest save(@RequestBody ExamSaveReqDTO reqDTO) {
         //复制参数
         baseService.save(reqDTO);
@@ -56,14 +56,13 @@ public class ExamController extends BaseController {
     }
 
     /**
-     * 批量删除
-     *
-     * @param reqDTO
-     * @return
-     */
+    * 批量删除
+    * @param reqDTO
+    * @return
+    */
     @RequiresRoles("sa")
     @ApiOperation(value = "批量删除")
-    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
+    @RequestMapping(value = "/delete", method = { RequestMethod.POST})
     public ApiRest edit(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.removeByIds(reqDTO.getIds());
@@ -71,13 +70,12 @@ public class ExamController extends BaseController {
     }
 
     /**
-     * 查找详情
-     *
-     * @param reqDTO
-     * @return
-     */
+    * 查找详情
+    * @param reqDTO
+    * @return
+    */
     @ApiOperation(value = "查找详情")
-    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
+    @RequestMapping(value = "/detail", method = { RequestMethod.POST})
     public ApiRest<ExamSaveReqDTO> find(@RequestBody BaseIdReqDTO reqDTO) {
         ExamSaveReqDTO dto = baseService.findDetail(reqDTO.getId());
         return super.success(dto);
@@ -85,13 +83,12 @@ public class ExamController extends BaseController {
 
     /**
      * 查找详情
-     *
      * @param reqDTO
      * @return
      */
     @RequiresRoles("sa")
     @ApiOperation(value = "查找详情")
-    @RequestMapping(value = "/state", method = {RequestMethod.POST})
+    @RequestMapping(value = "/state", method = { RequestMethod.POST})
     public ApiRest state(@RequestBody BaseStateReqDTO reqDTO) {
 
         QueryWrapper<Exam> wrapper = new QueryWrapper<>();
@@ -107,12 +104,11 @@ public class ExamController extends BaseController {
 
     /**
      * 分页查找
-     *
      * @param reqDTO
      * @return
      */
     @ApiOperation(value = "考试视角")
-    @RequestMapping(value = "/online-paging", method = {RequestMethod.POST})
+    @RequestMapping(value = "/online-paging", method = { RequestMethod.POST})
     public ApiRest<IPage<ExamOnlineRespDTO>> myPaging(@RequestBody PagingReqDTO<ExamDTO> reqDTO) {
 
         //分页查询并转换
@@ -121,14 +117,13 @@ public class ExamController extends BaseController {
     }
 
     /**
-     * 分页查找
-     *
-     * @param reqDTO
-     * @return
-     */
+    * 分页查找
+    * @param reqDTO
+    * @return
+    */
     @RequiresRoles("sa")
     @ApiOperation(value = "分页查找")
-    @RequestMapping(value = "/paging", method = {RequestMethod.POST})
+    @RequestMapping(value = "/paging", method = { RequestMethod.POST})
     public ApiRest<IPage<ExamDTO>> paging(@RequestBody PagingReqDTO<ExamDTO> reqDTO) {
 
         //分页查询并转换
@@ -140,13 +135,12 @@ public class ExamController extends BaseController {
 
     /**
      * 分页查找
-     *
      * @param reqDTO
      * @return
      */
     @RequiresRoles("sa")
     @ApiOperation(value = "待阅试卷")
-    @RequestMapping(value = "/review-paging", method = {RequestMethod.POST})
+    @RequestMapping(value = "/review-paging", method = { RequestMethod.POST})
     public ApiRest<IPage<ExamReviewRespDTO>> reviewPaging(@RequestBody PagingReqDTO<ExamDTO> reqDTO) {
         //分页查询并转换
         IPage<ExamReviewRespDTO> page = baseService.reviewPaging(reqDTO);

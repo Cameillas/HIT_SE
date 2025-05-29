@@ -22,8 +22,8 @@ import java.util.List;
 * 语言设置 服务实现类
 * </p>
 *
-
-* @since 05-25 16:33
+* @author 聪明笨狗
+* @since 2020-05-25 16:33
 */
 @Service
 public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> implements PaperQuService {

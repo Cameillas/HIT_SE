@@ -7,8 +7,8 @@ import com.yf.exam.modules.sys.user.entity.SysRole;
 * 角色Mapper
 * </p>
 *
-
-* @since 04-13 16:57
+* @author 聪明笨狗
+* @since 2020-04-13 16:57
 */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 

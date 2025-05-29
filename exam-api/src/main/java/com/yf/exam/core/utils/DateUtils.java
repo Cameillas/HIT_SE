@@ -66,7 +66,6 @@ public class DateUtils {
 
 	/**
 	 * parseDate:将字符串转换成日期，使用：yyyy-MM-dd HH:mm:ss 来格式化
-	 * @author Bool
 	 * @param date
 	 * @return
 	 */

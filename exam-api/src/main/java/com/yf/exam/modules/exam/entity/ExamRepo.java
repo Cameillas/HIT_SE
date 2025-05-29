@@ -12,8 +12,8 @@ import lombok.Data;
 * 考试题库实体类
 * </p>
 *
-
-* @since 09-05 11:14
+* @author 聪明笨狗
+* @since 2020-09-05 11:14
 */
 @Data
 @TableName("el_exam_repo")

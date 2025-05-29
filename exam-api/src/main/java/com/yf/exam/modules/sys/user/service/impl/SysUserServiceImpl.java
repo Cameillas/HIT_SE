@@ -38,8 +38,8 @@ import java.util.List;
 * 语言设置 服务实现类
 * </p>
 *
-
-* @since 04-13 16:57
+* @author 聪明笨狗
+* @since 2020-04-13 16:57
 */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {

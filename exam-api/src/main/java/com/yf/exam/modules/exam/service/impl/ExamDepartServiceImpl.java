@@ -17,8 +17,8 @@ import java.util.List;
 * 考试部门业务实现类
 * </p>
 *
-
-* @since 09-03 17:24
+* @author 聪明笨狗
+* @since 2020-09-03 17:24
 */
 @Service
 public class ExamDepartServiceImpl extends ServiceImpl<ExamDepartMapper, ExamDepart> implements ExamDepartService {

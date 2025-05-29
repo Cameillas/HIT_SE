@@ -14,8 +14,8 @@ import java.util.Date;
 * 试卷实体类
 * </p>
 *
-
-* @since 05-25 17:31
+* @author 聪明笨狗
+* @since 2020-05-25 17:31
 */
 @Data
 @TableName("el_paper")

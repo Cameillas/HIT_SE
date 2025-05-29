@@ -9,6 +9,7 @@ import com.yf.exam.core.exception.ServiceException;
 import com.yf.exam.core.utils.BeanMapper;
 import com.yf.exam.modules.qu.dto.QuAnswerDTO;
 import com.yf.exam.modules.qu.dto.QuDTO;
+import com.yf.exam.modules.qu.dto.export.QuExportDTO;
 import com.yf.exam.modules.qu.dto.ext.QuDetailDTO;
 import com.yf.exam.modules.qu.dto.request.QuQueryReqDTO;
 import com.yf.exam.modules.qu.entity.Qu;
@@ -24,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,8 +38,8 @@ import java.util.Map;
  * 语言设置 服务实现类
  * </p>
  *
- 
- * @since 05-25 10:17
+ * @author 聪明笨狗
+ * @since 2020-05-25 10:17
  */
 @Service
 public class QuServiceImpl extends ServiceImpl<QuMapper, Qu> implements QuService {
@@ -61,14 +62,6 @@ public class QuServiceImpl extends ServiceImpl<QuMapper, Qu> implements QuServic
         //转换结果
         IPage<QuDTO> pageData = baseMapper.paging(page, reqDTO.getParams());
         return pageData;
-    }
-
-    @Override
-    public List<QuDTO> queryall() {
-
-        //转换结果
-        List<QuDTO> Data = baseMapper.queryall();
-        return Data;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -135,6 +128,101 @@ public class QuServiceImpl extends ServiceImpl<QuMapper, Qu> implements QuServic
 
     }
 
+    @Override
+    public List<QuExportDTO> listForExport(QuQueryReqDTO query) {
+        return baseMapper.listForExport(query);
+    }
+
+    @Override
+    public int importExcel(List<QuExportDTO> dtoList) {
+
+        //根据题目名称分组
+        Map<Integer, List<QuExportDTO>> anMap = new HashMap<>(16);
+
+        //题目本体信息
+        Map<Integer, QuExportDTO> quMap = new HashMap<>(16);
+
+        //数据分组
+        for (QuExportDTO item : dtoList) {
+
+            // 空白的ID
+            if (StringUtils.isEmpty(item.getNo())) {
+                continue;
+            }
+
+            Integer key;
+            //序号
+            try {
+                key = Integer.parseInt(item.getNo());
+            } catch (Exception e) {
+                continue;
+            }
+
+            //如果已经有题目了，直接处理选项
+            if (anMap.containsKey(key)) {
+                anMap.get(key).add(item);
+            } else {
+                //如果没有，将题目内容和选项一起
+                List<QuExportDTO> subList = new ArrayList<>();
+                subList.add(item);
+                anMap.put(key, subList);
+                quMap.put(key, item);
+            }
+        }
+
+        int count = 0;
+        try {
+
+            //循环题目插入
+            for (Integer key : quMap.keySet()) {
+
+                QuExportDTO im = quMap.get(key);
+
+                //题目基本信息
+                QuDetailDTO qu = new QuDetailDTO();
+                qu.setContent(im.getQContent());
+                qu.setAnalysis(im.getQAnalysis());
+                qu.setQuType(Integer.parseInt(im.getQuType()));
+                qu.setCreateTime(new Date());
+
+                //设置回答列表
+                List<QuAnswerDTO> answerList = this.processAnswerList(anMap.get(key));
+                //设置题目
+                qu.setAnswerList(answerList);
+                //设置引用题库
+                qu.setRepoIds(im.getRepoList());
+                // 保存答案
+                this.save(qu);
+                count++;
+            }
+
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            throw new ServiceException(1, "导入出现问题，行：" + count + "，" + e.getMessage());
+        }
+
+        return count;
+    }
+
+    /**
+     * 处理回答列表
+     *
+     * @param importList
+     * @return
+     */
+    private List<QuAnswerDTO> processAnswerList(List<QuExportDTO> importList) {
+
+        List<QuAnswerDTO> list = new ArrayList<>(16);
+        for (QuExportDTO item : importList) {
+            QuAnswerDTO a = new QuAnswerDTO();
+            a.setIsRight("1".equals(item.getAIsRight()));
+            a.setContent(item.getAContent());
+            a.setAnalysis(item.getAAnalysis());
+            a.setId("");
+            list.add(a);
+        }
+        return list;
+    }
 
     /**
      * 校验题目信息
@@ -189,5 +277,16 @@ public class QuServiceImpl extends ServiceImpl<QuMapper, Qu> implements QuServic
                 throw new ServiceException(1, no + "单选题不能包含多个正确项！");
             }
 
+    }
+    @Override
+    public boolean existsByContent(String content) {
+        if (StringUtils.isBlank(content)) {
+            return false;
+        }
+        QueryWrapper<Qu> wrapper = new QueryWrapper<>();
+        wrapper.eq("content", content.trim());
+        // 如果数据库字段是 q_content（基于 QuExportDTO 的 qContent），替换为：
+        // wrapper.eq("q_content", content.trim());
+        return this.count(wrapper) > 0;
     }
 }

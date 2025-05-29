@@ -12,8 +12,8 @@ import java.util.List;
 * 问题题目请求类
 * </p>
 *
-
-* @since 05-25 13:23
+* @author 聪明笨狗
+* @since 2020-05-25 13:23
 */
 @Data
 @ApiModel(value="题目查询请求类", description="题目查询请求类")
@@ -27,9 +27,6 @@ public class QuQueryReqDTO implements Serializable {
 
     @ApiModelProperty(value = "归属题库")
     private List<String> repoIds;
-
-    @ApiModelProperty(value = "题目难度")
-    private Integer level;
 
     @ApiModelProperty(value = "题目内容")
     private String content;

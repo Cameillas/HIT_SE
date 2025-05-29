@@ -16,8 +16,8 @@ import java.util.List;
 * 试卷Mapper
 * </p>
 *
-
-* @since 05-25 16:33
+* @author 聪明笨狗
+* @since 2020-05-25 16:33
 */
 public interface PaperMapper extends BaseMapper<Paper> {
 

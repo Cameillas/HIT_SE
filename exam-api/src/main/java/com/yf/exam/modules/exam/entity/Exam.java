@@ -13,8 +13,8 @@ import java.util.Date;
 * 考试实体类
 * </p>
 *
-
-* @since 07-25 16:18
+* @author 聪明笨狗
+* @since 2020-07-25 16:18
 */
 @Data
 @TableName("el_exam")

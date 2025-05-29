@@ -6,9 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * IP获取工具类，用户获取网络请求过来的真实IP
  * ClassName: IpUtils <br/>
- * date: 2018年2月13日 下午7:27:52 <br/>
  *
- * @author Bool
  * @version
  */
 public class IpUtils {
@@ -17,7 +15,6 @@ public class IpUtils {
 	/**
 	 *
 	 * getClientIp:通过请求获取客户端的真实IP地址
-	 * @author Bool
 	 * @param request
 	 * @return
 	 */

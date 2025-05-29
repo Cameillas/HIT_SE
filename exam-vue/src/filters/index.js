@@ -30,13 +30,7 @@ export function quTypeFilter(value) {
   }
   return map[value]
 }
-export function hardTypeFilter(value) {
-  const map = {
-    '1': '简单',
-    '2': '困难'
-  }
-  return map[value]
-}
+
 export function paperStateFilter(value) {
   const map = {
     '0': '考试中',

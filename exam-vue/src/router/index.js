@@ -231,13 +231,6 @@ export const asyncRoutes = [
       },
 
       {
-        path: 'test',
-        component: () => import('@/views/test'),
-        name: 'TEST',
-        meta: { title: '测试', noCache: true, icon: 'log' }
-      },
-
-      {
         path: 'exam/add',
         component: () => import('@/views/exam/exam/form'),
         name: 'AddExam',
